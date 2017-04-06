@@ -13,6 +13,7 @@
 		3831EFC61E961AA100C6FC99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3831EFC41E961AA100C6FC99 /* Main.storyboard */; };
 		3831EFC81E961AA100C6FC99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3831EFC71E961AA100C6FC99 /* Assets.xcassets */; };
 		3831EFCB1E961AA100C6FC99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3831EFC91E961AA100C6FC99 /* LaunchScreen.storyboard */; };
+		3831EFD41E961AFB00C6FC99 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3831EFD31E961AFB00C6FC99 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		3831EFC71E961AA100C6FC99 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3831EFCA1E961AA100C6FC99 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3831EFCC1E961AA100C6FC99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3831EFD31E961AFB00C6FC99 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3831EFD41E961AFB00C6FC99 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +47,7 @@
 			children = (
 				3831EFBA1E961AA000C6FC99 /* sqliteDemo */,
 				3831EFB91E961AA000C6FC99 /* Products */,
+				3831EFD21E961AFB00C6FC99 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +81,14 @@
 				3831EFBC1E961AA000C6FC99 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3831EFD21E961AFB00C6FC99 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3831EFD31E961AFB00C6FC99 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -38,34 +38,53 @@
 
     //判断执行结果
     if (ret == SQLITE_OK) {
-        NSLog(@"打开数据库成功");
-//        NSString *sqlCreateTable = @"CREATE TABLE IF NOT EXISTS student (ID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, age INTEGER, address TEXT)";
-
-
-//        NSString *sql1 = [NSString stringWithFormat:
-//                          @"INSERT INTO '%@' ('%@', '%@', '%@') VALUES ('%@', %@, '%@')",
-//                          @"student", NAME, AGE, ADDRESS, @"张三", @"23", @"西城区"];
-//
-//        NSString *sql2 = [NSString stringWithFormat:
-//                          @"INSERT INTO '%@' ('%@', '%@', '%@') VALUES ('%@', %d, '%@')",
-//                          @"student", NAME, AGE, ADDRESS, @"老六", 20, @"东城区"];
-
+        [self alertLog:[NSString stringWithFormat:@"%s",__func__] isSuc:true];
 //        [self selectDatebase];
-        [self updateDatebase];
+        [self update];
 //        [self exeSqlite:sqlCreateTable];
     }else{
-        NSLog(@"打开数据库失败");
+        [self alertLog:[NSString stringWithFormat:@"%s",__func__] isSuc:NO];
     }
 }
-//执行非查询类的语句，例如创建，添加，删除等操作，使用如下方法：
--(void)execSql:(NSString*)sqlStr{
-//sqlite3_exec方法中第一个参数为成功执行了打开数据库操作的sqlite3指针，第二个参数为要执行的sql语句，最后一个参数为错误信息字符串。
-    char *err;
-    int result =  sqlite3_exec(db, [sqlStr UTF8String], NULL, NULL, &err);
-    if (result == SQLITE_OK) {
-        NSLog(@"数据库语句执行成功");
+
+- (void)create{
+    NSString *sqlCreateTable = @"CREATE TABLE IF NOT EXISTS student (ID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, age INTEGER, address TEXT)";
+    [self execSql:sqlCreateTable result:^(BOOL isSuccess) {
+        [self alertLog:[NSString stringWithFormat:@"%s",__func__] isSuc:isSuccess];
+    }];
+}
+- (void)insert{
+    NSString *sql1 = [NSString stringWithFormat:
+                      @"INSERT INTO '%@' ('%@', '%@', '%@') VALUES ('%@', %@, '%@')",
+                      @"student", NAME, AGE, ADDRESS, @"张三", @"23", @"西城区"];
+
+//    NSString *sql2 = [NSString stringWithFormat:
+//                      @"INSERT INTO '%@' ('%@', '%@', '%@') VALUES ('%@', %d, '%@')",
+//                      @"student", NAME, AGE, ADDRESS, @"老六", 20, @"东城区"];
+    [self execSql:sql1 result:^(BOOL isSuccess) {
+        [self alertLog:[NSString stringWithFormat:@"%s",__func__] isSuc:isSuccess];
+
+    }];
+}
+- (void)delete{
+
+}
+- (void)update{
+    //    NSString *sql1 =  @"UPDATE student set ('name', 'age', 'address') VALUES ('张三', 30, '西城区')";
+    NSString *sql1 =  @"UPDATE student set name=\"张三\", age=30";
+
+    //    NSString *sql2 = @"UPDATE student set age=20 where age=20" ;
+
+    [self execSql:sql1 result:^(BOOL isSuccess) {
+        [self alertLog:[NSString stringWithFormat:@"%s",__func__] isSuc:isSuccess];
+    }];
+    //    [self execSql:sql2];
+}
+-(void)alertLog:(NSString*)typeName isSuc:(BOOL)isSuccess{
+    if (isSuccess) {
+        printf("\n%s successed!\n",[typeName cStringUsingEncoding:NSUTF8StringEncoding]);
     }else{
-        NSLog(@"exe result = %d",result);
+        printf("\n%s feild!\n",[typeName cStringUsingEncoding:NSUTF8StringEncoding]);
     }
 }
 - (void)selectDatebase{
@@ -88,13 +107,18 @@
     sqlite3_close(db);
 }
 
-- (void)updateDatebase{
-//    NSString *sql1 =  @"UPDATE student set ('name', 'age', 'address') VALUES ('张三', 30, '西城区')";
-    NSString *sql1 =  @"UPDATE student set name=\"张三\", age=30";
 
-//    NSString *sql2 = @"UPDATE student set age=20 where age=20" ;
-
-    [self execSql:sql1];
-//    [self execSql:sql2];
+//执行非查询类的语句，例如创建，添加，删除等操作，使用如下方法：
+-(void)execSql:(NSString*)sqlStr result:(void(^)(BOOL isSuccess))theResult{
+    //sqlite3_exec方法中第一个参数为成功执行了打开数据库操作的sqlite3指针，第二个参数为要执行的sql语句，最后一个参数为错误信息字符串。
+    char *err;
+    int result =  sqlite3_exec(db, [sqlStr UTF8String], NULL, NULL, &err);
+    if (result == SQLITE_OK) {
+        NSLog(@"数据库语句执行成功");
+        theResult(YES);
+    }else{
+        NSLog(@"exe result = %d",result);
+        theResult(NO);
+    }
 }
 @end
